@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 
 //Bootstrap components
 import { Col, Row, Form, Button } from 'react-bootstrap';
 
-const ServiceArea = () => {
+const SaleableArea = () => {
     //Array for dynamic inputs
     const [inputs, setInputs] = useState([
         {
         unitNumberTag: '',
-        serviceAreaType: '',
-        serviceAreaSize: ''
+        saleableAreaType: '',
+        saleableAreaSize: ''
         }
     ])
     
@@ -24,8 +24,8 @@ const ServiceArea = () => {
     const addRow = () => {
         let newRow = {
             unitNumberTag: '',
-            serviceAreaType: '',
-            serviceAreaSize: ''
+            saleableAreaType: '',
+            saleableAreaSize: ''
         }
 
         setInputs([...inputs, newRow])
@@ -39,7 +39,7 @@ const ServiceArea = () => {
     }
 
     return (
-        <Form>
+        <>
             <Form.Group>
                 <Row>
                 <Col></Col>
@@ -54,7 +54,7 @@ const ServiceArea = () => {
                 <Form.Group key={index}>
                     <Row>
                     {/* Show index/row number */}
-                    <Col>{index}</Col>
+                    <Col>{index + 1}</Col>
 
                     {/* Unit No. */}
                     <Col>
@@ -71,11 +71,11 @@ const ServiceArea = () => {
                     <Col>
                         <Form.Select 
                         aria-label="Default select example"
-                        name="serviceAreaType"
-                        value={input.serviceAreaType}
+                        name="saleableAreaType"
+                        value={input.saleableAreaType}
                         onChange={event => handleChange(index, event)}
                         >
-                        <option value="">Select service area type</option>
+                        <option value="">Select saleable area type</option>
                         <option value="Roadway/Common Area">Roadway/Common Area</option>
                         <option value="Stairs">Stairs</option>
                         <option value="Transformer Room">Transformer Room</option>
@@ -94,8 +94,8 @@ const ServiceArea = () => {
                         type="number"
                         step="0.01"
                         placeholder="Area (sqm)" 
-                        name="serviceAreaSize"
-                        value={input.serviceAreaSize}
+                        name="saleableAreaSize"
+                        value={input.saleableAreaSize}
                         onChange={event => handleChange(index, event)}
                         />
                     </Col>
@@ -113,8 +113,8 @@ const ServiceArea = () => {
             <Button variant="primary" onClick={addRow}>
             Add row
             </Button>
-        </Form>
+        </>
     )
 }
 
-export default ServiceArea;
+export default SaleableArea;
