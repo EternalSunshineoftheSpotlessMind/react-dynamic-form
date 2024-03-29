@@ -3,7 +3,7 @@ import Floor from './components/Create Document/Floor';
 import { v4 as uuidv4 } from 'uuid';
 
 //Bootstrap components
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 
 //Firebase imports
 // import { collection, addDoc, getDocs } from "firebase/firestore";
@@ -48,15 +48,21 @@ const App = () => {
       <Form>
         {floors.map((floor, index) => (
             <Fragment key={floor.id}>
-              <h3>{floor.id}</h3>
-              <Form.Control
-                size='lg'
-                type="text"
-                placeholder="Floor name"
-                name="floorName"
-                value={floors.floorName}
-                onChange={event => handleChange(index, event)}
-                />
+              <Row>
+                <Col>
+                  <Form.Control
+                  size='lg'
+                  type="text"
+                  placeholder="Floor name"
+                  name="floorName"
+                  value={floors.floorName}
+                  onChange={event => handleChange(index, event)}
+                  />
+                </Col>
+                <Col>
+                  <figure>Floor id: {floor.id}</figure>
+                </Col>
+              </Row>
               <Floor />
               <Button variant='secondary' onClick={() => removeFloor(floor.id)}>Remove floor</Button>
             </Fragment>
