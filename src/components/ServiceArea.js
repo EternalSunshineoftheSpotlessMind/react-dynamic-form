@@ -3,58 +3,42 @@ import { useState } from 'react';
 //Bootstrap components
 import { Col, Row, Form, Button } from 'react-bootstrap';
 
-//Firebase imports
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from '../firebase';
-
-function SaleableArea() {
+const ServiceArea = () => {
+    //Array for dynamic inputs
     const [inputs, setInputs] = useState([
         {
-          unitNumberTag: '',
-          serviceAreaType: '',
-          serviceAreaSize: ''
-        }
-    ])
-    
-    const handleChange = (index, event) => {
-    let data = [...inputs];
-    data[index][event.target.name] = event.target.value;
-    setInputs(data);
-    }
-
-    //For button to add new row
-    const addRow = () => {
-    let newRow = {
         unitNumberTag: '',
         serviceAreaType: '',
         serviceAreaSize: ''
-    }
-
-    setInputs([...inputs, newRow])
-    }
-
-    //Add to firebase
-    // const addFloor = async (e) => {
-    //   e.preventDefault();  
+        }
+    ])
     
-    //   try {
-    //       const rowRef = await addDoc(collection(db, "floors"), {
-    //         todo: todo,    
-    //       });
-    //       console.log("Document written with ID: ", rowRef.id);
-    //     } catch (e) {
-    //       console.error("Error adding document: ", e);
-    //     }
-    // }
-
-    //Remove row function
-    const removeRow = (index) => {
-    let data = [...inputs];
-    data.splice(index, 1);
-    setInputs(data);
+    //Change handler
+    const handleChange = (index, event) => {
+        let data = [...inputs];
+        data[index][event.target.name] = event.target.value;
+        setInputs(data);
     }
 
-    return(
+    //Add new row for saleable area
+    const addRow = () => {
+        let newRow = {
+            unitNumberTag: '',
+            serviceAreaType: '',
+            serviceAreaSize: ''
+        }
+
+        setInputs([...inputs, newRow])
+    }
+
+    //Remove row for saleable area
+    const removeRow = (index) => {
+        let data = [...inputs];
+        data.splice(index, 1);
+        setInputs(data);
+    }
+
+    return (
         <Form>
             <Form.Group>
                 <Row>
@@ -133,4 +117,4 @@ function SaleableArea() {
     )
 }
 
-export default SaleableArea;
+export default ServiceArea;
