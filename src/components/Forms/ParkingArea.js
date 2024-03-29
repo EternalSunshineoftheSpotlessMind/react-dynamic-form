@@ -8,8 +8,9 @@ const ParkingArea = () => {
     const [inputs, setInputs] = useState([
         {
         unitNumberTag: '',
-        saleableAreaType: '',
-        saleableAreaSize: ''
+        slotAmount: '',
+        slotSize: '',
+        totalArea: ''
         }
     ])
     
@@ -24,8 +25,9 @@ const ParkingArea = () => {
     const addRow = () => {
         let newRow = {
             unitNumberTag: '',
-            saleableAreaType: '',
-            saleableAreaSize: ''
+            slotAmount: '',
+            slotSize: '',
+            totalArea: ''
         }
 
         setInputs([...inputs, newRow])
@@ -42,11 +44,11 @@ const ParkingArea = () => {
         <>
             <Form.Group>
                 <Row>
-                <Col></Col>
-                <Col>Unit No./Tag</Col>
-                <Col>Type</Col>
-                <Col>Area (sqm)</Col>
-                <Col></Col>
+                    <Col></Col>
+                    <Col>Unit No./Tag</Col>
+                    <Col>No. of Parking</Col>
+                    <Col>Area (sqm)</Col>
+                    <Col></Col>
                 </Row>
             </Form.Group>
             {inputs.map((input, index) => {

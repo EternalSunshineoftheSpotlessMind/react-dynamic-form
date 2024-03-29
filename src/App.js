@@ -10,7 +10,7 @@ import { Form, Button } from 'react-bootstrap';
 // import { db } from './firebase';
 
 const App = () => {
-  //Array of floor components
+  //Array of floors. Floors are identified by id that is created using uuid
   const [floors, setFloors] = useState([
     {
       id: uuidv4(),
@@ -18,20 +18,20 @@ const App = () => {
     }
   ])
 
-  //Change handler
+  //Change handler for Floor name
   const handleChange = (index, event) => {
     let data = [...floors];
     data[index][event.target.name] = event.target.value;
     setFloors(data);
   }
 
-  //Add new floor to array
+  //Add new floor by creating and adding a new id to floors.id
   const addFloor = () => {
     const newFloor = {id: uuidv4()}
     setFloors((prevFloors) => [...prevFloors, newFloor])
   }
 
-  //Remove floor from array
+  //Remove floor from array by using index
   const removeFloor = (index) => {
     setFloors((prevFloors) => prevFloors.filter((floor) => floor.id !== index));
   }
