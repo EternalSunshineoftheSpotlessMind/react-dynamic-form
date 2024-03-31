@@ -1,7 +1,7 @@
 //Bootstrap components
 import { Col, Row, Form, Button } from 'react-bootstrap';
 
-const SaleableArea = ({floorIndex, saleableArea, onSaleableAreaChange, onAddSaleableArea, onRemoveSaleableArea}) => {
+const AmenitiesArea = ({floorIndex, amenitiesArea, onAmenitiesAreaChange, onAddAmenitiesArea, onRemoveAmenitiesArea}) => {
     return (
         <>
             <Form.Group>
@@ -13,7 +13,7 @@ const SaleableArea = ({floorIndex, saleableArea, onSaleableAreaChange, onAddSale
                     <Col></Col>
                 </Row>
             </Form.Group>
-            {saleableArea.map((input, index) => {
+            {amenitiesArea.map((input, index) => {
                 return(
                     <Form.Group key={index}>
                         <Row>
@@ -25,9 +25,9 @@ const SaleableArea = ({floorIndex, saleableArea, onSaleableAreaChange, onAddSale
                             <Form.Control
                             type="text"
                             placeholder="Unit No./Tag"
-                            name="saleableAreaUnitNumberTag"
-                            value={input.saleableAreaUnitNumberTag}
-                            onChange={(e) => onSaleableAreaChange(floorIndex, index, 'saleableAreaUnitNumberTag', e.target.value)}
+                            name="amenitiesAreaUnitNumberTag"
+                            value={input.amenitiesAreaUnitNumberTag}
+                            onChange={(e) => onAmenitiesAreaChange(floorIndex, index, 'amenitiesAreaUnitNumberTag', e.target.value)}
                             />
                         </Col>
 
@@ -35,15 +35,15 @@ const SaleableArea = ({floorIndex, saleableArea, onSaleableAreaChange, onAddSale
                         <Col>
                             <Form.Select 
                             aria-label="Default select example"
-                            name="saleableAreaType"
-                            value={input.saleableAreaType}
-                            onChange={(e) => onSaleableAreaChange(floorIndex, index, 'saleableAreaType', e.target.value)}
+                            name="amenitiesAreaType"
+                            value={input.amenitiesAreaType}
+                            onChange={(e) => onAmenitiesAreaChange(floorIndex, index, 'amenitiesAreaType', e.target.value)}
                             required
                             >
-                            <option value="">Select saleable area type</option>
-                            <option value="Commercial Retail">Commercial Retail</option>
-                            <option value="Restaurant">Restaurant</option>
-                            <option value="Conference">Conference</option>
+                            <option value="">Select amenities area type</option>
+                            <option value="Multifunction Room">Multifunction Room</option>
+                            <option value="Spa">Spa</option>
+                            <option value="Gym">Gym</option>
                             </Form.Select>
                         </Col>
 
@@ -53,16 +53,16 @@ const SaleableArea = ({floorIndex, saleableArea, onSaleableAreaChange, onAddSale
                             type="number"
                             step="0.01"
                             placeholder="Area (sqm)" 
-                            name="saleableAreaSize"
-                            value={input.saleableAreaSize}
-                            onChange={(e) => onSaleableAreaChange(floorIndex, index, 'saleableAreaSize', e.target.value)}
+                            name="amenitiesAreaSize"
+                            value={input.amenitiesAreaSize}
+                            onChange={(e) => onAmenitiesAreaChange(floorIndex, index, 'amenitiesAreaSize', e.target.value)}
                             required
                             />
                         </Col>
 
                         {/* Remove row button */}
                         <Col>
-                            <Button variant='primary' onClick={() => onRemoveSaleableArea(floorIndex)}>
+                            <Button variant='primary' onClick={() => onRemoveAmenitiesArea(floorIndex)}>
                             Remove
                             </Button>
                         </Col>
@@ -70,11 +70,11 @@ const SaleableArea = ({floorIndex, saleableArea, onSaleableAreaChange, onAddSale
                     </Form.Group>
                 )
             })}
-            <Button variant="primary" onClick={() => onAddSaleableArea(floorIndex)}>
+            <Button variant="primary" onClick={() => onAddAmenitiesArea(floorIndex)}>
             Add row
             </Button>
         </>
     )
 }
 
-export default SaleableArea;
+export default AmenitiesArea;

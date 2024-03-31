@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
 //Firebase imports
-// import { collection, addDoc, getDocs } from "firebase/firestore";
-// import { db } from './firebase';
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "./firebase"
 
 const App = () => {
   //Array of floors. Floors are identified by id that is created using uuid
@@ -35,6 +35,21 @@ const App = () => {
           numberOfParking: '',
           parkingSlotSize: '',
           parkingTotalArea: ''
+        }
+      ],
+      amenitiesArea: [
+        {
+          amenitiesAreaUnitNumberTag: '',
+          amenitiesAreaType: '',
+          amenitiesAreaSize: ''
+        }
+      ],
+      residentialArea: [
+        {
+          residentialAreaUnitType: '',
+          residentialAreaNumberUnit: '',
+          residentialAreaSize: '',
+          residentialTotalArea: ''
         }
       ]
     }
@@ -72,6 +87,21 @@ const App = () => {
           numberOfParking: '',
           parkingSlotSize: '',
           parkingTotalArea: ''
+        }
+      ],
+      amenitiesArea: [
+        {
+          amenitiesAreaUnitNumberTag: '',
+          amenitiesAreaType: '',
+          amenitiesAreaSize: ''
+        }
+      ],
+      residentialArea: [
+        {
+          residentialAreaUnitType: '',
+          residentialAreaNumberUnit: '',
+          residentialAreaSize: '',
+          residentialTotalArea: ''
         }
       ]
     }
@@ -142,6 +172,12 @@ const App = () => {
   const handleParkingAreaChange = (floorIndex, areaIndex, field, value) => {
     const updatedFloors = [...floors];
     updatedFloors[floorIndex].parkingArea[areaIndex][field] = value;
+
+    //Calculate Total Parking Area by multiplying No. of Parking and Slot Size
+    updatedFloors[floorIndex].parkingArea[areaIndex].parkingTotalArea = 
+      updatedFloors[floorIndex].parkingArea[areaIndex].numberOfParking * 
+      updatedFloors[floorIndex].parkingArea[areaIndex].parkingSlotSize;
+
     setFloors(updatedFloors);
   };
 
@@ -165,10 +201,79 @@ const App = () => {
     setFloors(updatedFloors);
   };
 
+  /* AMENITIES AREA FUNCTIONS */
+  //Amenities Area Form change handler
+  const handleAmenitiesAreaChange = (floorIndex, areaIndex, field, value) => {
+    const updatedFloors = [...floors];
+    updatedFloors[floorIndex].amenitiesArea[areaIndex][field] = value;
+    setFloors(updatedFloors);
+  };
+
+  //For adding more inputs to Amenities Area
+  const handleAddAmenitiesArea = (floorIndex) => {
+    const newAmenitiesArea = { 
+      amenitiesAreaUnitNumberTag: '',
+      amenitiesAreaType: '',
+      amenitiesAreaSize: ''
+    };
+    const updatedFloors = [...floors];
+    updatedFloors[floorIndex].amenitiesArea.push(newAmenitiesArea);
+    setFloors(updatedFloors);
+  };
+
+  //For removing inputs from Amenities Area
+  const handleRemoveAmenitiesArea = (floorIndex, areaIndex) => {
+    const updatedFloors = [...floors];
+    updatedFloors[floorIndex].amenitiesArea.splice(areaIndex, 1);
+    setFloors(updatedFloors);
+  };
+
+  /* RESIDENTIAL AREA FUNCTIONS */
+  //Residential Area Form change handler
+  const handleResidentialAreaChange = (floorIndex, areaIndex, field, value) => {
+    const updatedFloors = [...floors];
+    updatedFloors[floorIndex].residentialArea[areaIndex][field] = value;
+
+    //Calculate Total Parking Area by multiplying No. of Parking and Slot Size
+    updatedFloors[floorIndex].residentialArea[areaIndex].residentialTotalArea = 
+      updatedFloors[floorIndex].residentialArea[areaIndex].residentialAreaSize * 
+      updatedFloors[floorIndex].residentialArea[areaIndex].residentialAreaNumberUnit;
+
+    setFloors(updatedFloors);
+  };
+
+  //For adding more inputs to Residential Area
+  const handleAddResidentialArea = (floorIndex) => {
+    const newResidentialArea = { 
+      residentialAreaUnitType: '',
+      residentialAreaNumberUnit: '',
+      residentialAreaSize: '',
+      residentialTotalArea: ''
+    };
+    const updatedFloors = [...floors];
+    updatedFloors[floorIndex].residentialArea.push(newResidentialArea);
+    setFloors(updatedFloors);
+  };
+
+  //For removing inputs from Residential Area
+  const handleRemoveResidentialArea = (floorIndex, areaIndex) => {
+    const updatedFloors = [...floors];
+    updatedFloors[floorIndex].residentialArea.splice(areaIndex, 1);
+    setFloors(updatedFloors);
+  };
+
   //Submits the contents of inputs
-  const submit = (event) => {
-    event.preventDefault();
-    console.log(floors);
+  const handleSubmit = async () => {
+    try {
+      // Assuming 'floors' is the state you want to upload
+      const docRef = await addDoc(collection(db, 'buildingSurface'), {
+        floors: floors,
+      });
+      console.log(floors);
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
   }
 
   return (
@@ -208,13 +313,23 @@ const App = () => {
                 onParkingAreaChange={handleParkingAreaChange}
                 onAddParkingArea={handleAddParkingArea}
                 onRemoveParkingArea={handleRemoveParkingArea}
+
+                amenitiesArea={floor.amenitiesArea}
+                onAmenitiesAreaChange={handleAmenitiesAreaChange}
+                onAddAmenitiesArea={handleAddAmenitiesArea}
+                onRemoveAmenitiesArea={handleRemoveAmenitiesArea}
+
+                residentialArea={floor.residentialArea}
+                onResidentialAreaChange={handleResidentialAreaChange}
+                onAddResidentialArea={handleAddResidentialArea}
+                onRemoveResidentialArea={handleRemoveResidentialArea}
               />
               <Button variant='secondary' onClick={() => removeFloor(floor.id)}>Remove floor</Button>
             </Fragment>
         ))}
       </Form>
       <Button variant='secondary' onClick={addFloor}>Add Floor</Button>
-      <Button variant="primary" onClick={submit}>Submit</Button>
+      <Button variant="primary" onClick={handleSubmit}>Submit</Button>
     </div>
   );
 }

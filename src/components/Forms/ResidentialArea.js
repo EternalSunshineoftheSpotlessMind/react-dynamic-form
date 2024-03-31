@@ -1,70 +1,70 @@
 //Bootstrap components
 import { Col, Row, Form, Button } from 'react-bootstrap';
 
-const ParkingArea = ({floorIndex, parkingArea, onParkingAreaChange, onAddParkingArea, onRemoveParkingArea}) => {
+const ResidentialArea = ({floorIndex, residentialArea, onResidentialAreaChange, onAddResidentialArea, onRemoveResidentialArea}) => {
     return (
         <>
             <Form.Group>
                 <Row>
                     <Col></Col>
                     <Col>Unit No./Tag</Col>
-                    <Col>No. of Parking</Col>
-                    <Col>Slot Size (sqm)</Col>
+                    <Col>No. of Unit</Col>
+                    <Col>Unit Size (sqm)</Col>
                     <Col>Total Area (sqm)</Col>
                     <Col></Col>
                 </Row>
             </Form.Group>
-            {parkingArea.map((input, index) => {
+            {residentialArea.map((input, index) => {
                 return(
                     <Form.Group key={index}>
                         <Row>
                         {/* Show index/row number */}
                         <Col>{index + 1}</Col>
 
-                        {/* Unit No. */}
+                        {/* Unit Type */}
                         <Col>
                             <Form.Control
                             type="text"
-                            placeholder="Unit No./Tag"
-                            name="parkingAreaUnitNumberTag"
-                            value={input.parkingAreaUnitNumberTag}
-                            onChange={(e) => onParkingAreaChange(floorIndex, index, 'parkingAreaUnitNumberTag', e.target.value)}
+                            placeholder="Unit Type"
+                            name="residentialAreaUnitType"
+                            value={input.residentialAreaUnitType}
+                            onChange={(e) => onResidentialAreaChange(floorIndex, index, 'residentialAreaUnitType', e.target.value)}
                             />
                         </Col>
 
-                        {/* No. of Parking */}
+                        {/* No. of Unit */}
                         <Col>
                             <Form.Control
                             type="number"
-                            placeholder="No. of Parking"
-                            name="numberOfParking"
-                            value={input.numberOfParking}
-                            onChange={(e) => onParkingAreaChange(floorIndex, index, 'numberOfParking', e.target.value)}
+                            placeholder="No. of Unit"
+                            name="residentialAreaNumberUnit"
+                            value={input.residentialAreaNumberUnit}
+                            onChange={(e) => onResidentialAreaChange(floorIndex, index, 'residentialAreaNumberUnit', e.target.value)}
                             required
                             />
                         </Col>
 
-                        {/* Slot size */}
+                        {/* Unit size */}
                         <Col>
                             <Form.Control 
                             type="number"
                             step="0.01"
-                            placeholder="Slot size (sqm)" 
-                            name="parkingSlotSize"
-                            value={input.parkingSlotSize}
-                            onChange={(e) => onParkingAreaChange(floorIndex, index, 'parkingSlotSize', e.target.value)}
+                            placeholder="Area (sqm)"
+                            name="residentialAreaSize"
+                            value={input.residentialAreaSize}
+                            onChange={(e) => onResidentialAreaChange(floorIndex, index, 'residentialAreaSize', e.target.value)}
                             required
                             />
                         </Col>
 
                         {/* Total area */}
                         <Col>
-                            {input.parkingTotalArea}
+                            {input.residentialTotalArea}
                         </Col>
 
                         {/* Remove row button */}
                         <Col>
-                            <Button variant='primary' onClick={() => onRemoveParkingArea(floorIndex)}>
+                            <Button variant='primary' onClick={() => onRemoveResidentialArea(floorIndex)}>
                             Remove
                             </Button>
                         </Col>
@@ -72,11 +72,11 @@ const ParkingArea = ({floorIndex, parkingArea, onParkingAreaChange, onAddParking
                     </Form.Group>
                 )
             })}
-            <Button variant="primary" onClick={() => onAddParkingArea(floorIndex)}>
+            <Button variant="primary" onClick={() => onAddResidentialArea(floorIndex)}>
             Add row
             </Button>
         </>
     )
 }
 
-export default ParkingArea;
+export default ResidentialArea;
